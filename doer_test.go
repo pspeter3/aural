@@ -24,7 +24,7 @@ func (m *mockDoer) Do(req *http.Request) (*http.Response, error) {
 
 func TestMockDo(t *testing.T) {
 	// Use a status code that does not exist in the wild
-	code := 1337
+	code := 418
 	m := mockDoer{
 		handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(code)
