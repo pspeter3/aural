@@ -1,0 +1,10 @@
+dependencies:
+  pre:
+    - go get -u github.com/golang/lint/golint github.com/mattn/goveralls
+test:
+  override:
+    - golint -set_exit_status ./...
+    - go vet ./...
+    - go test -v -cover -race -coverprofile=aural.coverprofile .
+  post:
+    - goveralls -coverprofile=aural.coverprofile -service=circle-ci -repotoken=$COVERALLS_TOKEN
