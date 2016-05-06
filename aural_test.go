@@ -18,6 +18,6 @@ func ok(t *testing.T, err error) {
 
 func equals(t *testing.T, actual, expected interface{}) {
 	if actual != expected {
-		t.Fatal("%s does not equal %s", actual, expected)
+		t.Fatalf("%s does not equal %s", actual, expected)
 	}
 }
