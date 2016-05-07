@@ -29,7 +29,7 @@ func testAction(t *testing.T, method string, entityType string) {
 	}
 	m := mockDoer{http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		equals(t, r.URL.Path, "/"+path.Join("v1", "artists", artist, method))
-		w.Write([]byte(fmt.Sprintf(`{"%s":{"items":[]}}`, entityType)))
+		w.Write([]byte(fmt.Sprintf(`{"%s":[]}`, entityType)))
 	})}
 	user := aural.User{
 		ID: aural.UserID(1),
@@ -78,7 +78,7 @@ func TestProcess_SearchArtists(t *testing.T) {
 	}
 	m := mockDoer{http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		equals(t, r.URL.Query().Get("q"), message.Text)
-		w.Write([]byte(`{"artist":{"items":[]}}`))
+		w.Write([]byte(`{"artist":[]}`))
 	})}
 	user := aural.User{
 		ID: aural.UserID(1),
