@@ -15,7 +15,7 @@ type mockSender struct {
 }
 
 func (m mockSender) Send(client aural.Doer, user aural.User, elements []aural.Element) error {
-	equals(m.t, m.user, user)
+	assert(m.t, strings.EqualFold(string(m.user.ID), string(user.ID)), "Ids must be equal")
 	equals(m.t, len(elements), 0)
 	return nil
 }
