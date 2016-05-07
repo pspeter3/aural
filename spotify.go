@@ -11,15 +11,11 @@ const spotifyLimit = "10"
 const spotifyMarket = "us"
 
 type artists struct {
-	Artists struct {
-		Items []Artist `json:"items"`
-	} `json:"artists"`
+	Artists []Artist `json:"artists"`
 }
 
 type tracks struct {
-	Tracks struct {
-		Items []Track `json:"items"`
-	} `json:"tracks"`
+	Tracks []Track `json:"tracks"`
 }
 
 func spotify(client Doer, path string, values url.Values, data interface{}) error {
@@ -52,14 +48,14 @@ func SearchArtists(client Doer, query string) ([]Artist, error) {
 	values.Set("limit", spotifyLimit)
 	var data artists
 	err := spotify(client, "search", values, &data)
-	return data.Artists.Items, err
+	return data.Artists, err
 }
 
 // RelatedArtists queries Spotify for artists that are similar to artist
 func RelatedArtists(client Doer, artist ArtistID) ([]Artist, error) {
 	var data artists
 	err := spotify(client, path.Join("artists", string(artist), "related-artists"), url.Values{}, &data)
-	return data.Artists.Items, err
+	return data.Artists, err
 }
 
 // TopTracks queries Spotify for the top tracks of an artist
@@ -68,5 +64,5 @@ func TopTracks(client Doer, artist ArtistID) ([]Track, error) {
 	values.Set("country", spotifyMarket)
 	var data tracks
 	err := spotify(client, path.Join("artists", string(artist), "top-tracks"), values, &data)
-	return data.Tracks.Items, err
+	return data.Tracks, err
 }
