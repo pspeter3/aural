@@ -32,7 +32,7 @@ func testAction(t *testing.T, method string, entityType string) {
 		w.Write([]byte(fmt.Sprintf(`{"%s":{"items":[]}}`, entityType)))
 	})}
 	user := aural.User{
-		ID: aural.UserID("1"),
+		ID: aural.UserID(1),
 	}
 	s := mockSender{
 		t:    t,
@@ -81,7 +81,7 @@ func TestProcess_SearchArtists(t *testing.T) {
 		w.Write([]byte(`{"artist":{"items":[]}}`))
 	})}
 	user := aural.User{
-		ID: aural.UserID("1"),
+		ID: aural.UserID(1),
 	}
 	s := mockSender{
 		t:    t,

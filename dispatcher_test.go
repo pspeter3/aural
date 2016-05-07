@@ -22,7 +22,7 @@ func TestDispatcher_BadRequest(t *testing.T) {
 
 func TestDispatcher_ServeHTTP(t *testing.T) {
 	user := aural.User{
-		ID: aural.UserID("1"),
+		ID: aural.UserID(1),
 	}
 	m := mockDoer{http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		equals(t, r.URL.Path, "/v1/search")
@@ -42,7 +42,7 @@ func TestDispatcher_ServeHTTP(t *testing.T) {
 			"messaging": [
 				{
 					"sender": {
-						"id": "1"
+						"id": 1
 					},
 					"message": {
 						"text": "Does Not Exist"
