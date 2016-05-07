@@ -3,7 +3,7 @@ package aural
 // Button is a struct for a response in Facebook Messenger
 type Button struct {
 	Type    string `json:"type"`
-	Title   string `json:"type"`
+	Title   string `json:"title"`
 	URL     string `json:"url,omitempty"`
 	Payload string `json:"payload,omitempty"`
 }

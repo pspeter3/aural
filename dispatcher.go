@@ -25,7 +25,6 @@ func (d dispatcher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	log.Printf("%v\n", data)
 	var wg sync.WaitGroup
 	for _, entry := range data.Entries {
 		for _, messaging := range entry.Messagings {

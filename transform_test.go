@@ -13,7 +13,7 @@ func TestTransformArtists(t *testing.T) {
 		Total: 1,
 	}
 	externalURLs := struct {
-		Spotify string `json:"url"`
+		Spotify string `json:"spotify"`
 	}{
 		Spotify: "https://www.spotify.com",
 	}
@@ -36,7 +36,7 @@ func TestTransformArtists(t *testing.T) {
 	element := aural.TransformArtists([]aural.Artist{artist})[0]
 	equals(t, element.Title, artist.Name)
 	equals(t, element.ImageURL, real.URL)
-	equals(t, element.Subtitle, "Popularity: 1\nFollowers: 1\nGenres: foo,bar")
+	equals(t, element.Subtitle, "Popularity: 1 Followers: 1 Genres: foo,bar")
 	buttons := []aural.Button{
 		aural.NewWebButton("Open", externalURLs.Spotify),
 		aural.NewPostbackButton("Top Tracks", "top-tracks:1"),
@@ -52,7 +52,7 @@ func TestTransformArtists(t *testing.T) {
 
 func TestTransformTracks(t *testing.T) {
 	externalURLs := struct {
-		Spotify string `json:"url"`
+		Spotify string `json:"spotify"`
 	}{
 		Spotify: "https://www.spotify.com",
 	}
@@ -78,7 +78,7 @@ func TestTransformTracks(t *testing.T) {
 	element := aural.TransformTracks([]aural.Track{track})[0]
 	equals(t, element.Title, track.Name)
 	equals(t, element.ImageURL, real.URL)
-	equals(t, element.Subtitle, "album 1:1\n1.00s")
+	equals(t, element.Subtitle, "album 1:1 1.00s")
 	buttons := []aural.Button{
 		aural.NewWebButton("Open", externalURLs.Spotify),
 	}
@@ -90,5 +90,5 @@ func TestTransformTracks(t *testing.T) {
 	}
 	track.Explicit = true
 	element = aural.TransformTracks([]aural.Track{track})[0]
-	equals(t, element.Subtitle, "album 1:1\n1.00s\nExplicit")
+	equals(t, element.Subtitle, "album 1:1 1.00s Explicit")
 }
