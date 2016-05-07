@@ -22,4 +22,3 @@ func TestNewPostbackButton(t *testing.T) {
 	equals(t, button.Title, title)
 	equals(t, button.Payload, payload)
 }
-

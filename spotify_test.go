@@ -15,7 +15,7 @@ func TestSearchArtists(t *testing.T) {
 		equals(t, r.URL.Query().Get("type"), "artist")
 		equals(t, r.URL.Query().Get("market"), "us")
 		equals(t, r.URL.Query().Get("limit"), "10")
-		w.Write([]byte("{\"artist\":{\"items\":[]}}"))
+		w.Write([]byte(`{"artist":{"items":[]}}`))
 	})}
 	artists, err := aural.SearchArtists(m, query)
 	ok(t, err)
@@ -26,7 +26,7 @@ func TestRelatedArtists(t *testing.T) {
 	artist := aural.ArtistID("abcdef")
 	m := mockDoer{http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		equals(t, r.URL.Path, "/"+path.Join("v1", "artists", string(artist), "related-artists"))
-		w.Write([]byte("{\"artist\":{\"items\":[]}}"))
+		w.Write([]byte(`{"artist":{"items":[]}}`))
 	})}
 	artists, err := aural.RelatedArtists(m, artist)
 	ok(t, err)
@@ -38,7 +38,7 @@ func TestTopTracks(t *testing.T) {
 	m := mockDoer{http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		equals(t, r.URL.Path, "/"+path.Join("v1", "artists", string(artist), "top-tracks"))
 		equals(t, r.URL.Query().Get("country"), "us")
-		w.Write([]byte("{\"tracks\":{\"items\":[]}}"))
+		w.Write([]byte(`{"tracks":{"items":[]}}`))
 	})}
 	tracks, err := aural.TopTracks(m, artist)
 	ok(t, err)
