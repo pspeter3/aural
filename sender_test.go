@@ -19,7 +19,8 @@ func TestSender_Send(t *testing.T) {
 		equals(t, r.URL.Query().Get("access_token"), token)
 		body, err := ioutil.ReadAll(r.Body)
 		ok(t, err)
-		assert(t, strings.EqualFold(string(body), `{"recipient":{"id":"1"},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[]}}}}`), "Bodies are not the same")
+		expected := `{"recipient":{"id":"1"},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[]}}}}`
+		assert(t, strings.EqualFold(string(body), expected), "Bodies are not the same")
 	})}
 	sender.Send(m, user, []aural.Element{})
 }
