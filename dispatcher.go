@@ -2,6 +2,7 @@ package aural
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"sync"
 )
@@ -28,7 +29,10 @@ func (d dispatcher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		for _, messaging := range entry.Messagings {
 			go func(client Doer, sender Sender, messaging Messaging) {
 				wg.Add(1)
-				Process(client, sender, messaging)
+				err := Process(client, sender, messaging)
+				if err != nil {
+					log.Println(err)
+				}
 				wg.Done()
 			}(d.newDoer(), d.sender, messaging)
 		}
