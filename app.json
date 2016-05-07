@@ -1,0 +1,12 @@
+{
+  "name": "aural",
+  "description": "A music recommender based on Spotify",
+  "keywords": [
+    "facebook",
+    "messenger",
+    "spotify",
+    "go",
+    "golang"
+  ],
+  "repository": "https://github.com/pspeter3/aural"
+}

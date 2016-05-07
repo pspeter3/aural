@@ -1,0 +1,10 @@
+{
+  "package": [],
+  "rootPath": "github.com/pspeter3/aural",
+  "heroku": {
+    "install": [
+      "./cmd/..."
+    ],
+    "goVersion": "go1.6"
+  }
+}
