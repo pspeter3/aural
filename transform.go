@@ -28,7 +28,7 @@ func TransformArtists(artists []Artist) []Element {
 	elements := make([]Element, len(artists))
 	for i, artist := range artists {
 		genres := strings.Join(artist.Genres, ",")
-		subtitle := fmt.Sprintf("Popularity: %d\nFollowers: %d\nGenres: %s", artist.Popularity, artist.Followers.Total, genres)
+		subtitle := fmt.Sprintf("Popularity: %d Followers: %d Genres: %s", artist.Popularity, artist.Followers.Total, genres)
 		elements[i] = Element{
 			Title:    artist.Name,
 			ImageURL: ImageURL(artist.Images),
@@ -49,9 +49,9 @@ func TransformTracks(tracks []Track) []Element {
 	for i, track := range tracks {
 		explicit := ""
 		if track.Explicit {
-			explicit = "\nExplicit"
+			explicit = " Explicit"
 		}
-		subtitle := fmt.Sprintf("%s %d:%d\n%.2fs%s", track.Album.Name, track.Disc, track.Track, track.Duration.Seconds(), explicit)
+		subtitle := fmt.Sprintf("%s %d:%d %.2fs%s", track.Album.Name, track.Disc, track.Track, track.Duration.Seconds(), explicit)
 		elements[i] = Element{
 			Title:    track.Name,
 			ImageURL: ImageURL(track.Album.Images),
