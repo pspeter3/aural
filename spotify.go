@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strconv"
 )
 
-const spotifyLimit = "10"
 const spotifyMarket = "us"
 
 type artists struct {
@@ -45,7 +45,7 @@ func SearchArtists(client Doer, query string) ([]Artist, error) {
 	values.Set("q", query)
 	values.Set("type", "artist")
 	values.Set("market", spotifyMarket)
-	values.Set("limit", spotifyLimit)
+	values.Set("limit", strconv.Itoa(senderLimit))
 	var data artists
 	err := spotify(client, "search", values, &data)
 	return data.Artists, err
