@@ -51,7 +51,7 @@ func TransformTracks(tracks []Track) []Element {
 		if track.Explicit {
 			explicit = " Explicit"
 		}
-		subtitle := fmt.Sprintf("%s %d:%d %.2fs%s", track.Album.Name, track.Disc, track.Track, track.Duration.Seconds(), explicit)
+		subtitle := fmt.Sprintf("%s %.2fs Popularity: %d%s", track.Album.Name, track.Duration.Seconds(), track.Popularity, explicit)
 		elements[i] = Element{
 			Title:    track.Name,
 			ImageURL: ImageURL(track.Album.Images),

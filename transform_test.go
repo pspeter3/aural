@@ -71,14 +71,13 @@ func TestTransformTracks(t *testing.T) {
 				real,
 			},
 		},
-		Disc:     1,
-		Track:    1,
-		Duration: time.Second,
+		Popularity: 1,
+		Duration:   time.Second,
 	}
 	element := aural.TransformTracks([]aural.Track{track})[0]
 	equals(t, element.Title, track.Name)
 	equals(t, element.ImageURL, real.URL)
-	equals(t, element.Subtitle, "album 1:1 1.00s")
+	equals(t, element.Subtitle, "album 1.00s Popularity: 1")
 	buttons := []aural.Button{
 		aural.NewWebButton("Open", externalURLs.Spotify),
 	}
@@ -90,5 +89,5 @@ func TestTransformTracks(t *testing.T) {
 	}
 	track.Explicit = true
 	element = aural.TransformTracks([]aural.Track{track})[0]
-	equals(t, element.Subtitle, "album 1:1 1.00s Explicit")
+	equals(t, element.Subtitle, "album 1.00s Popularity: 1 Explicit")
 }

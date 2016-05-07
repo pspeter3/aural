@@ -3,6 +3,8 @@ package aural
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -14,6 +16,8 @@ type Sender interface {
 type sender struct {
 	url string
 }
+
+const senderLimit = 10
 
 type fbPayload struct {
 	TemplateType string    `json:"template_type"`
@@ -30,6 +34,9 @@ type fbMessage struct {
 }
 
 func (s sender) Send(client Doer, user User, elements []Element) error {
+	if len(elements) > senderLimit {
+		elements = elements[:senderLimit]
+	}
 	body, err := json.Marshal(struct {
 		Recipient User      `json:"recipient"`
 		Message   fbMessage `json:"message"`
@@ -55,7 +62,17 @@ func (s sender) Send(client Doer, user User, elements []Element) error {
 	}
 	resp, err := client.Do(req)
 	defer resp.Body.Close()
-	return err
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusOK {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(body))
+	}
+	return nil
 }
 
 // NewSender creates a new Facebook Messenger sender
