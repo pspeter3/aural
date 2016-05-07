@@ -10,14 +10,6 @@ import (
 
 const spotifyMarket = "us"
 
-type artists struct {
-	Artists []Artist `json:"artists"`
-}
-
-type tracks struct {
-	Tracks []Track `json:"tracks"`
-}
-
 func spotify(client Doer, path string, values url.Values, data interface{}) error {
 	spotifyURL := url.URL{
 		Scheme:   "https",
@@ -46,14 +38,20 @@ func SearchArtists(client Doer, query string) ([]Artist, error) {
 	values.Set("type", "artist")
 	values.Set("market", spotifyMarket)
 	values.Set("limit", strconv.Itoa(senderLimit))
-	var data artists
+	var data struct {
+		Artists struct {
+			Items []Artist `json:"items"`
+		} `json:"artists"`
+	}
 	err := spotify(client, "search", values, &data)
-	return data.Artists, err
+	return data.Artists.Items, err
 }
 
 // RelatedArtists queries Spotify for artists that are similar to artist
 func RelatedArtists(client Doer, artist ArtistID) ([]Artist, error) {
-	var data artists
+	var data struct {
+		Artists []Artist `json:"artists"`
+	}
 	err := spotify(client, path.Join("artists", string(artist), "related-artists"), url.Values{}, &data)
 	return data.Artists, err
 }
@@ -62,7 +60,9 @@ func RelatedArtists(client Doer, artist ArtistID) ([]Artist, error) {
 func TopTracks(client Doer, artist ArtistID) ([]Track, error) {
 	values := url.Values{}
 	values.Set("country", spotifyMarket)
-	var data tracks
+	var data struct {
+		Tracks []Track `json:"tracks"`
+	}
 	err := spotify(client, path.Join("artists", string(artist), "top-tracks"), values, &data)
 	return data.Tracks, err
 }
