@@ -1,11 +1,11 @@
 package aural_test
 
 import (
-	"testing"
-	"net/http/httptest"
 	"github.com/pspeter3/aural"
 	"net/http"
+	"net/http/httptest"
 	"strings"
+	"testing"
 )
 
 func TestDispatcher_BadRequest(t *testing.T) {
